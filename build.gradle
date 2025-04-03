@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.17.0'
+}
+
+group 'com.github.codereview'
+version '1.0'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+intellij {
+    version = '2023.1'
+    type = 'IC'
+    plugins = ['com.intellij.java', 'Git4Idea']
+}
+
+patchPluginXml {
+    sinceBuild = '231'
+    untilBuild = '241.*'
+    changeNotes = """
+      <ul>
+        <li>1.0.0: 初始版本 - 支持GitLab代码提交前审查</li>
+      </ul>
+    """
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+}

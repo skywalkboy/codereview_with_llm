@@ -1,0 +1,50 @@
+<idea-plugin>
+    <id>com.github.codereview.gitlab</id>
+    <name>GitLab Code Review</name>
+    <vendor>codereview</vendor>
+    <description><![CDATA[
+        <h2>GitLab代码审查插件</h2>
+        <p>一个智能的代码审查工具，在提交GitLab代码时调用智谱大模型API进行代码审查并弹出提醒。</p>
+        
+        <h3>核心功能:</h3>
+        <ul>
+            <li><strong>代码提交监听</strong>: 自动监听Git提交事件，在提交前进行代码审查</li>
+            <li><strong>智能代码分析</strong>: 调用智谱大模型API对代码变更进行智能分析</li>
+            <li><strong>审查结果提醒</strong>: 以弹窗形式展示代码审查结果，帮助开发者改进代码质量</li>
+            <li><strong>自定义配置</strong>: 提供灵活的配置选项，包括API密钥设置和审查规则定制</li>
+        </ul>
+        
+        <h3>使用方法:</h3>
+        <ol>
+            <li>在插件设置中配置智谱API密钥</li>
+            <li>正常使用Git提交代码</li>
+            <li>插件会自动在提交前进行代码审查</li>
+            <li>根据审查结果决定是否继续提交或修改代码</li>
+        </ol>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.vcs</depends>
+    <depends>Git4Idea</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- 添加设置页面 -->
+        <applicationConfigurable parentId="tools"
+            instance="com.github.codereview.gitlab.settings.CodeReviewSettingsConfigurable"
+            id="com.github.codereview.gitlab.settings.CodeReviewSettingsConfigurable"
+            displayName="GitLab Code Review" />
+        <!-- 存储设置 -->
+        <applicationService
+            serviceImplementation="com.github.codereview.gitlab.settings.CodeReviewSettings" />
+    </extensions>
+
+    <extensions defaultExtensionNs="Git4Idea">
+        <checkinHandlerFactory
+            implementation="com.github.codereview.gitlab.listeners.GitCommitListener" />
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <checkinHandlerFactory
+            implementation="com.github.codereview.gitlab.listeners.GitCommitListener" />
+    </extensions>
+</idea-plugin>
