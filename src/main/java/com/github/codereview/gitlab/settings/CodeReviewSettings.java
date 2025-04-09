@@ -23,6 +23,15 @@ public class CodeReviewSettings implements PersistentStateComponent<CodeReviewSe
     private int maxTokens = 2000;
     private double temperature = 0.7;
     private String webhookUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=4ac05f9b-553c-40cc-8120-d9d5553c39df";
+    private boolean enableStreamingOutput = true; // 启用流式输出
+
+    public boolean isEnableStreamingOutput() {
+        return enableStreamingOutput;
+    }
+
+    public void setEnableStreamingOutput(boolean enableStreamingOutput) {
+        this.enableStreamingOutput = enableStreamingOutput;
+    }
 
     public String getApiKey() {
         return apiKey;
